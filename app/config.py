@@ -1,9 +1,14 @@
+"""
+defines configuration classes
+"""
 from os import path, environ
 
 from dotenv import load_dotenv
 
 
+# get the current dir
 curr_dir = path.abspath(path.dirname(__file__))
+# get the .env file path (curr_dir/../.env)
 env_dir = path.join(curr_dir, '..', '.env')
 
 class Config:
