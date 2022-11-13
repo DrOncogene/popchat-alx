@@ -26,7 +26,7 @@ class ProdConfig(Config):
 
 
 class DevConfig(Config):
-    """production configs"""
+    """dev configs"""
     FLASK_ENV = 'development'
     TESTING = True
     DEBUG = True
