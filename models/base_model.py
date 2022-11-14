@@ -18,15 +18,32 @@ class BaseModel:
         __init__ initializes basic or common instance attributes
 
         Args:
-            (Inclusive for now)
-
+            Arbitrary length of keyword arguments
         Returns:
             return Null
         """
-        #: str: unique instance attribute
-        self.id = str(uuid4())
-        #: datetime: time and date instance created
-        self.created_at = datetime.now()
+        if len(kwargs) == 0:
+            print(kwargs)
+            #: str: unique instance attribute
+            self.id = str(uuid4())
+            #: datetime: time and date instance created
+            self.created_at = datetime.now()
+        else:
+            try:
+                #: datetime obj: created_at converts to datetime obj
+                kwargs['created_at'] = datetime.strptime(
+                    kwargs['created_at'], '%Y-%m-%dT%H:%M:%S.%f'
+                )
+            except Exception:
+                if 'id' not in kwargs:
+                    self.__init__()
+                else:
+                    self.created_at = datetime.now()
+            try:
+                del kwargs['__class__']
+            except Exception:
+                pass
+            self.__dict__.update(kwargs)
 
     def to_dict(self):
         """
@@ -55,10 +72,8 @@ class BaseModel:
     def __str__(self):
         """
         Prints string representation of any PopChat instance
-
         Args:
             No argument
-
         Returns:
             returns string
         """
