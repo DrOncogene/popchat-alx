@@ -94,7 +94,3 @@ class BaseModel:
             self.id,
             self.to_dict()
         )
-
-    def save(self):
-        models.storage.new(self)
-        models.storage.save()
