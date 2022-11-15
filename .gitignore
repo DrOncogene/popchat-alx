@@ -128,3 +128,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 test.py
+console.py
+models/__init__.py
+setup_mysql.sql
