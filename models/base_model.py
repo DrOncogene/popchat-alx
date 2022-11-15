@@ -6,9 +6,21 @@
 
 from datetime import datetime
 from uuid import uuid4
+import models
+
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import String, Column, DateTime
+
+Base = declarative_base()
 
 
 class BaseModel:
+    id = Column(String(128), nullable=False, primary_key=True)
+    created_at = Column(
+        DateTime,
+        default=datetime.utcnow,
+        nullable=False
+    )
     """
     BaseModel defines all common instance attributes
     and methods.
@@ -18,7 +30,7 @@ class BaseModel:
         __init__ initializes basic or common instance attributes
 
         Args:
-            Arbitrary length of keyword arguments
+            kwargs (key-value pair): Arbitrary length of keyword arguments
         Returns:
             return Null
         """
@@ -66,14 +78,14 @@ class BaseModel:
                 dict_rep[key] = value.isoformat()
             else:
                 dict_rep[key] = value
-        dict_rep['__class__'] = self.__class__.__name__
+        #dict_rep['__class__'] = self.__class__.__name__
         return dict_rep
 
     def __str__(self):
         """
         Prints string representation of any PopChat instance
         Args:
-            No argument
+            No required argument
         Returns:
             returns string
         """
@@ -82,3 +94,7 @@ class BaseModel:
             self.id,
             self.to_dict()
         )
+
+    def save(self):
+        models.storage.new(self)
+        models.storage.save()
