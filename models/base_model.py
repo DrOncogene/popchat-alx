@@ -76,9 +76,11 @@ class BaseModel:
         for (key, value) in self.__dict__.items():
             if type(value) is datetime:
                 dict_rep[key] = value.isoformat()
+            elif key == '_sa_instance_state':
+                continue
             else:
                 dict_rep[key] = value
-        #dict_rep['__class__'] = self.__class__.__name__
+        dict_rep['__class__'] = self.__class__.__name__
         return dict_rep
 
     def __str__(self):
@@ -94,3 +96,7 @@ class BaseModel:
             self.id,
             self.to_dict()
         )
+
+    def save(self):
+        models.storage.save()
+        models.storage.new(self)
