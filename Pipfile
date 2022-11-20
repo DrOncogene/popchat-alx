@@ -9,6 +9,8 @@ flask-socketio = ">=5.3.*"
 eventlet = ">=0.33.*"
 python-dotenv = "*"
 flask-cors = ">=3.0.*"
+sqlalchemy = ">=1.4.*"
+mysqlclient = ">=2.1.*"
 
 [dev-packages]
 pylint = "*"
