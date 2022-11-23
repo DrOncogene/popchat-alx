@@ -15,7 +15,7 @@ Base = declarative_base()
 
 
 class BaseModel:
-    id = Column(String(128), nullable=False, primary_key=True)
+    id = Column(String(60), nullable=False, primary_key=True)
     created_at = Column(
         DateTime,
         default=datetime.utcnow,
@@ -35,7 +35,6 @@ class BaseModel:
             return Null
         """
         if len(kwargs) == 0:
-            print(kwargs)
             #: str: unique instance attribute
             self.id = str(uuid4())
             #: datetime: time and date instance created
@@ -98,5 +97,12 @@ class BaseModel:
         )
 
     def save(self):
-        models.storage.save()
+        """
+        Persist newly created PopChat instance to storage engine
+        Args:
+            No required argument
+        Returns:
+            returns Null
+        """
         models.storage.new(self)
+        models.storage.save()
